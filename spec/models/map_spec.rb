@@ -7,6 +7,11 @@ RSpec.describe Map, type: :model do
     expect( map ).to be_present
   end
 
+  specify "the current room is the origin room to start" do
+    expect(map.current_room).to be_present
+    expect(map.current_room.coords).to eq( [0,0] )
+  end
+
   describe "origin room" do
 
     specify "exists" do

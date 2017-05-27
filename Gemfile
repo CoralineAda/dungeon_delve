@@ -4,7 +4,7 @@ gem 'rails', '>= 5.0'
 gem 'sqlite3'
 
 group :development, :test do
-  gem 'byebug'
+  gem 'pry'
 end
 
 group :test do
