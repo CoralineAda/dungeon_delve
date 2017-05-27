@@ -1,9 +1,7 @@
 class Room < ActiveRecord::Base
-
+  serialize :coords, JSON
   after_create :make_doors
-  after_initialize :set_coords
-
-  scope :current, -> { is_current: true }
+  has_one :map
 
   DIRECTIONS = %w{north south east west}
   OFFSET_FOR_DIRECTION = {
@@ -14,15 +12,18 @@ class Room < ActiveRecord::Base
   }
 
   def doors
-    Door.where("from_coords = :target OR to_coords = :target", { target: self.coords })
+    Door.where("from_coords = :target OR to_coords = :target", { target: self.coords.to_json })
   end
 
   def exit_to(direction)
     coords = coords_in_direction(direction)
     return unless doors.find{ |door| door.opens_into?(coords)}
     new_room = self.class.ensure_room_at(coords)
-    self.update_attribute(:current, false)
-    new_room.update_attribute(:current, true)
+    map.set_current_room self
+  end
+
+  def map
+    @_map ||= Map.current
   end
 
   private
@@ -32,27 +33,14 @@ class Room < ActiveRecord::Base
     self.coords.zip(offset).map {|a, b| a + b }
   end
 
-  def first_room?
-    self.class.current.empty?
-  end
-
   def make_doors
     DIRECTIONS.each do |direction|
-      next unless rand(2) == 1
+      next unless rand(2) == 1 || self.coords == [0,0]
       Door.create(
         from_coords: self.coords,
         to_coords: coords_in_direction(direction)
       )
     end
-    make_doors if doors.count == 0
-  end
-
-  def set_coords
-    if first_room?
-      self.coords = [ 0, 0 ]
-    else
-    end
-
   end
 
 end

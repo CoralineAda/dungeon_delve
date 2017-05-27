@@ -1,4 +1,4 @@
-class CreateGenericItems < ActiveRecord::Migration
+class CreateGenericItems < ActiveRecord::Migration[4.2]
   def change
     create_table :generic_items do |t|
       t.string :name

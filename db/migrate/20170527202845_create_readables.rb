@@ -1,4 +1,4 @@
-class CreateReadables < ActiveRecord::Migration
+class CreateReadables < ActiveRecord::Migration[4.2]
   def change
     create_table :readables do |t|
       t.string :name
