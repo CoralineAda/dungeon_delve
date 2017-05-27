@@ -6,9 +6,10 @@ RSpec.describe Room, type: :model do
 
   context "#make_doors" do
 
-    xit "generates at least one door" do
-      room = Room.create(coords: [1,1])
-      expect( room.doors ).to_not be_empty
+    it "generates at least one door" do
+      Map.reset
+      new_room = origin_room.exit_to("east")
+      expect( new_room.doors ).to_not be_empty
     end
 
     it "generates four doors for the origin room" do
@@ -19,7 +20,7 @@ RSpec.describe Room, type: :model do
   context "#exit_to" do
 
     it "places you in another room" do
-      expect( Map.current.current_room ).to be_present
+      Map.reset
       new_room = origin_room.exit_to("east")
       expect( Map.current.current_room ).to be_present
       expect( Map.current.current_room ).to_not eq(origin_room)
