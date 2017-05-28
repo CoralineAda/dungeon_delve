@@ -5,10 +5,11 @@ class Commander
   def self.process(command_string)
     return unless command_string.present?
     verb = command_string.split[0]
-    if predicate = command_string.split[1..-1]
+    predicate = command_string.split[1..-1]
+    if predicate.any?
       predicate = predicate.join(' ')
     else
-      predicate ||= verb
+      predicate = verb
     end
     if command = Command.where("synonyms ~* ?", verb).first
       klass = eval(command.handler_class)
