@@ -1,4 +1,4 @@
-class Instrument < ActiveRecord::Base
+class Instrument < ApplicationRecord
 
   belongs_to :player
   belongs_to :room

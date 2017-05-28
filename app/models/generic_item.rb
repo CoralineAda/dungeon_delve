@@ -1,4 +1,4 @@
-class GenericItem < ActiveRecord::Base
+class GenericItem < ApplicationRecord
 
   before_create :describe
   validates_uniqueness_of :name

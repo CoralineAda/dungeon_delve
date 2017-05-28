@@ -1,4 +1,4 @@
-class Player < ActiveRecord::Base
+class Player < ApplicationRecord
 
   validates_presence_of :name, :handle, :twitter_id
   validates_uniqueness_of :twitter_id

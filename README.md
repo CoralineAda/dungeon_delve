@@ -11,6 +11,8 @@ A dungeon delver Twitter bot!
 
 ```
   Map.reset
-  Commander.process("look")
-  Commander.process("east")
+  player = Player.first
+  Party.add_player(player)
+  Command.process("look", player)
+  Command.process("east", player)
 ```

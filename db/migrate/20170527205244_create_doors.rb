@@ -1,4 +1,4 @@
-class CreateDoors < ActiveRecord::Migration[4.2]
+class CreateDoors < ActiveRecord::Migration[5.1]
   def change
     create_table :doors do |t|
       t.string :from_coords

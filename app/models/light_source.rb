@@ -1,4 +1,4 @@
-class LightSource < ActiveRecord::Base
+class LightSource < ApplicationRecord
 
   belongs_to :player
   belongs_to :room

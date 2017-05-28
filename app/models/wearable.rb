@@ -1,4 +1,4 @@
-class Wearable < ActiveRecord::Base
+class Wearable < ApplicationRecord
 
   belongs_to :player
   belongs_to :room

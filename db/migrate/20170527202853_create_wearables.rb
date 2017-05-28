@@ -1,4 +1,4 @@
-class CreateWearables < ActiveRecord::Migration[4.2]
+class CreateWearables < ActiveRecord::Migration[5.1]
   def change
     create_table :wearables do |t|
       t.string :name

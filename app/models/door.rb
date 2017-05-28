@@ -1,4 +1,4 @@
-class Door < ActiveRecord::Base
+class Door < ApplicationRecord
 
   serialize :from_coords, JSON
   serialize :to_coords, JSON

@@ -17,7 +17,7 @@ Command.create(
 Command.create(
   name: "look",
   synonyms: %w{look}.to_json,
-  handler_class: "Room",
+  handler_class: "Looker",
   handler_method: "describe"
 )
 
@@ -27,4 +27,26 @@ Command.create(
   handler_class: "Item",
   handler_method: "take",
   takes_arguments: true
+)
+
+Command.create(
+  name: "join",
+  synonyms: %w{join},
+  handler_class: "Party",
+  handler_method: "add_player",
+  takes_arguments: false
+)
+
+Command.create(
+  name: "leave",
+  synonyms: %w{leave},
+  handler_class: "Party",
+  handler_method: "remove_player",
+  takes_arguments: false
+)
+
+Player.create(
+  name: "Coraline Ada Ehmke",
+  handle: "@CoralineAda",
+  twitter_id: "FOO123"
 )

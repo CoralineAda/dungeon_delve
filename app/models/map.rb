@@ -1,4 +1,4 @@
-class Map < ActiveRecord::Base
+class Map < ApplicationRecord
 
   belongs_to :current_room, class_name: "Room", foreign_key: :current_room_id
 
@@ -13,7 +13,9 @@ class Map < ActiveRecord::Base
   def self.reset
     Map.destroy_all
     Room.destroy_all
+    Party.destroy_all
     Map.create(current_room_id: ensure_room_at(0,0).id)
+    Party.create
   end
 
 end

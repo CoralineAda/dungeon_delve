@@ -1,4 +1,4 @@
-class Room < ActiveRecord::Base
+class Room < ApplicationRecord
   serialize :coords, JSON
 
   after_create :make_doors

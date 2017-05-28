@@ -1,4 +1,4 @@
-class Weapon < ActiveRecord::Base
+class Weapon < ApplicationRecord
 
   belongs_to :player
   belongs_to :room

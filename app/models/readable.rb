@@ -1,4 +1,4 @@
-class Readable < ActiveRecord::Base
+class Readable < ApplicationRecord
   belongs_to :player
   belongs_to :room
 
