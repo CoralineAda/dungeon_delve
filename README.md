@@ -4,8 +4,14 @@ A dungeon delver Twitter bot!
 ## setup
 
 ```
-  rake db:reset
-  rake db:seed
+  $ mv .env.sample .env
+```
+
+Configure your Twitter credentials in `.env`
+
+```
+  $ rake db:reset
+  $ rake db:seed
 ```
 ## testing in console
 
