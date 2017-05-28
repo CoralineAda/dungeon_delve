@@ -1,21 +1,23 @@
 class Client
 
-  def self.notify(message, *player)
-    player[0..4].each{ |player| new.notify(message, player)}
-  end
-
-  def reply(raw_message, player)
-    if message.length > 140
-      client.update(message.truncate(140))
+  def self.notify_of_queue_opening(message, *player)
+    player[0..4].each do |player|
+      new.reply(message, player && player.handle || nil)
     end
   end
 
-  def chunk_message(raw_message, player=nil, chunked=[])
+  def reply(raw_message, player)
+    chunk_message(raw_message, player && player.handle || nil).each do |message|
+      client.update(message)
+    end
+  end
+
+  def chunk_message(raw_message, player_handle=nil, chunked=[])
     return chunked unless raw_message.present?
     chunks = raw_message.split
-    if player
-      handle_length = player.handle.length + 2
-      handle_chunk = "@#{player.handle}"
+    if player_handle
+      handle_length = player_handle.length + 2
+      handle_chunk = "@#{player_handle}"
     else
       handle_length = 0
       handle_chunk = ""
@@ -26,7 +28,7 @@ class Client
     else
       chunked << chunks.shift
     end
-    chunk_message(chunks.join(' '), player, chunked)
+    chunk_message(chunks.join(' '), player_handle, chunked)
     chunked.map do |chunk|
       if handle_chunk.present?
         "#{handle_chunk} #{chunk}"
