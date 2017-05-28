@@ -1,14 +1,24 @@
  class Item
 
-  def self.create_at
+  def self.at(room_id)
+    Weapon.where(room_id: room_id) +
+    GenericItem.where(room_id: room_id) +
+    Instrument.where(room_id: room_id) +
+    LightSource.where(room_id: room_id) +
+    Readable.where(room_id: room_id) +
+    Weapon.where(room_id: room_id) +
+    Wearable.where(room_id: room_id)
+  end
+
+  def self.create_at(room_id)
     item = case rand(10)
       when 0; create_weapon
       when 1; create_instrument
-      when 2; create_container
-      when 3; create_light_source
-      when 4; create_readable
-      when 5; create_wearable
+      when 2; create_light_source
+      when 3; create_readable
+      when 4; create_wearable
       else; create_generic
+      end
     item.room_id = room_id
     item.save
   end

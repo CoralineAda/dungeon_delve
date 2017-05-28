@@ -29,6 +29,7 @@ ActiveRecord::Schema.define(version: 20170527212633) do
 
   create_table "instruments", force: :cascade do |t|
     t.string "name"
+    t.boolean "is_magical", default: false
     t.integer "owner_id"
     t.integer "room_id"
     t.datetime "created_at", null: false
@@ -78,6 +79,7 @@ ActiveRecord::Schema.define(version: 20170527212633) do
 
   create_table "weapons", force: :cascade do |t|
     t.string "name"
+    t.boolean "is_magical", default: false
     t.integer "owner_id"
     t.integer "room_id"
     t.datetime "created_at", null: false
@@ -86,7 +88,8 @@ ActiveRecord::Schema.define(version: 20170527212633) do
 
   create_table "wearables", force: :cascade do |t|
     t.string "name"
-    t.boolean "is_worn"
+    t.boolean "is_worn", default: false
+    t.boolean "is_magical", default: false
     t.integer "owner_id"
     t.integer "room_id"
     t.datetime "created_at", null: false

@@ -1,8 +1,5 @@
 class Randomizer
 
-  def self.random_text
-  end
-
   def self.one_chance_in(number)
     rand(number) == 0
   end

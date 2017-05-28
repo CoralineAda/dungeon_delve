@@ -4,7 +4,7 @@ class Room < ActiveRecord::Base
   after_create :make_doors
   before_create :make_dark_or_light
   before_create :describe
-  before_create :place_item
+  after_create :place_item
 
   validates_presence_of :coords
 
@@ -35,11 +35,11 @@ class Room < ActiveRecord::Base
 
   def has_grue?
     return false unless self.is_dark?
-    rand(5) == 1
+    Randomizer.one_chance_in(5)
   end
 
   def items
-    Items.at(self.id)
+    Item.at(self.id)
   end
 
   def look_to(direction)
@@ -74,7 +74,7 @@ class Room < ActiveRecord::Base
 
   def make_doors
     DIRECTIONS.each do |direction|
-      next unless rand(2) == 1 || self.coords == [0,0]
+      next unless Randomizer.one_chance_in(2) || self.coords == [0,0]
       new_coords = coords_in_direction(direction)
       next if Door.exists_between?(self.coords, new_coords)
       Door.find_or_create_by(
@@ -85,7 +85,7 @@ class Room < ActiveRecord::Base
   end
 
   def place_item
-    Item.create_at(self.id) if rand(5) == 0
+    Item.create_at(self.id) if Randomizer.one_chance_in(5)
   end
 
 end
