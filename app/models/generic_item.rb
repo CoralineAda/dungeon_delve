@@ -1,13 +1,15 @@
 class GenericItem < ActiveRecord::Base
 
-  belongs_to :place
+  before_create :describe
+  validates_uniqueness_of :name
+
+  belongs_to :room
   belongs_to :player
 
-  def materialize
-    GenericItem.create(
-      name: ::Namer.generic_name,
-      is_magical: rand(5) == 1
-    )
+  private
+
+  def describe
+    self.name = "#{Randomizer.adjective} #{Randomizer.generic_item}"
   end
 
 end

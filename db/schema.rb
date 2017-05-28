@@ -22,7 +22,7 @@ ActiveRecord::Schema.define(version: 20170527212633) do
   create_table "generic_items", force: :cascade do |t|
     t.string "name"
     t.integer "owner_id"
-    t.integer "place_id"
+    t.integer "room_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -30,23 +30,7 @@ ActiveRecord::Schema.define(version: 20170527212633) do
   create_table "instruments", force: :cascade do |t|
     t.string "name"
     t.integer "owner_id"
-    t.integer "place_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
-  create_table "items", force: :cascade do |t|
-    t.string "name"
-    t.text "description"
-    t.integer "owner_id"
-    t.integer "place_id"
-    t.boolean "is_container", default: false
-    t.boolean "is_light_source", default: false
-    t.boolean "is_magical", default: false
-    t.boolean "is_wearable", default: false
-    t.boolean "is_musical", default: false
-    t.boolean "is_readable", default: false
-    t.boolean "is_weapon", default: false
+    t.integer "room_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -54,7 +38,7 @@ ActiveRecord::Schema.define(version: 20170527212633) do
   create_table "light_sources", force: :cascade do |t|
     t.string "name"
     t.integer "owner_id"
-    t.integer "place_id"
+    t.integer "room_id"
     t.boolean "is_lit"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -78,7 +62,7 @@ ActiveRecord::Schema.define(version: 20170527212633) do
     t.string "name"
     t.text "text"
     t.integer "owner_id"
-    t.integer "place_id"
+    t.integer "room_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -86,6 +70,7 @@ ActiveRecord::Schema.define(version: 20170527212633) do
   create_table "rooms", force: :cascade do |t|
     t.text "description"
     t.string "coords"
+    t.boolean "is_dark", default: false
     t.integer "map_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -94,7 +79,7 @@ ActiveRecord::Schema.define(version: 20170527212633) do
   create_table "weapons", force: :cascade do |t|
     t.string "name"
     t.integer "owner_id"
-    t.integer "place_id"
+    t.integer "room_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -103,7 +88,7 @@ ActiveRecord::Schema.define(version: 20170527212633) do
     t.string "name"
     t.boolean "is_worn"
     t.integer "owner_id"
-    t.integer "place_id"
+    t.integer "room_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

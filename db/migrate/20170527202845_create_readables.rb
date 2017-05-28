@@ -4,7 +4,7 @@ class CreateReadables < ActiveRecord::Migration[4.2]
       t.string :name
       t.text :text
       t.integer :owner_id
-      t.integer :place_id
+      t.integer :room_id
       t.timestamps null: false
     end
   end

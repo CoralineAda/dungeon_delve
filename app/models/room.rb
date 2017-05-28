@@ -1,6 +1,11 @@
 class Room < ActiveRecord::Base
   serialize :coords, JSON
+
   after_create :make_doors
+  before_create :make_dark_or_light
+  before_create :describe
+  before_create :place_item
+
   validates_presence_of :coords
 
   DIRECTIONS = %w{north south east west}
@@ -28,6 +33,22 @@ class Room < ActiveRecord::Base
     new_room
   end
 
+  def has_grue?
+    return false unless self.is_dark?
+    rand(5) == 1
+  end
+
+  def items
+    Items.at(self.id)
+  end
+
+  def look_to(direction)
+    new_coords = coords_in_direction(direction)
+    return unless doors.find{ |door| door.opens_into?(new_coords)}
+    new_room = self.class.ensure_room_at(new_coords)
+    new_room.description
+  end
+
   def map
     @_map ||= Map.current
   end
@@ -37,6 +58,18 @@ class Room < ActiveRecord::Base
   def coords_in_direction(direction)
     offset = OFFSET_FOR_DIRECTION[direction.to_sym]
     self.coords.zip(offset).map {|a, b| a + b }
+  end
+
+  def describe
+    self.description = [
+      Randomizer.room_adjective,
+      Randomizer.room_type,
+      Randomizer.room_description
+    ].join(' ') + "."
+  end
+
+  def make_dark_or_light
+    self.is_dark = rand(10) == 1
   end
 
   def make_doors
@@ -49,6 +82,10 @@ class Room < ActiveRecord::Base
         to_coords: new_coords
       )
     end
+  end
+
+  def place_item
+    Item.create_at(self.id) if rand(5) == 0
   end
 
 end

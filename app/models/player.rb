@@ -9,4 +9,9 @@ class Player < ActiveRecord::Base
   has_many :readables
   has_many :wearables
 
+  def self.random_player_name
+    return "no one" unless Player.count > 0
+    Player.all.sample.handle
+  end
+
 end

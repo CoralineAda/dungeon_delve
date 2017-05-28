@@ -51,12 +51,15 @@ GEM
       nokogiri (>= 1.5.9)
     mail (2.6.5)
       mime-types (>= 1.16, < 4)
+    marky_markov (0.3.5)
+      msgpack
     method_source (0.8.2)
     mime-types (3.1)
       mime-types-data (~> 3.2015)
     mime-types-data (3.2016.0521)
     mini_portile2 (2.1.0)
     minitest (5.10.2)
+    msgpack (1.0.2)
     nio4r (2.0.0)
     nokogiri (1.7.2)
       mini_portile2 (~> 2.1.0)
@@ -129,6 +132,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  marky_markov
   pry
   rails (>= 5.0)
   rspec-rails
