@@ -53,6 +53,14 @@
     GenericItem.create
   end
 
+  def self.take(item_name)
+    if item = Map.current.current_room.items.find{ |item| item.name =~ /#{item_name}/i }
+      "You grab the #{item.name}."
+    else
+      "I don't see that here!"
+    end
+  end
+
   def give_to(item, user)
     item.user = user
     item.save
