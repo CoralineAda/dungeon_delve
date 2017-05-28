@@ -11,7 +11,7 @@ class Client
   end
 
   def chunk_message(raw_message, player=nil, chunked=[])
-    p raw_message
+    return chunked unless raw_message.present?
     chunks = raw_message.split
     if player
       handle_length = player.handle.length + 2
@@ -20,22 +20,20 @@ class Client
       handle_length = 0
       handle_chunk = ""
     end
-    if chunks.join(' ').length + handle_length > 140
-      chunks.each do |chunk|
-        word = chunks.shift
-        if handle_length + chunked.last.to_s.length + word.length + 1 < 140
-          last_chunk = chunked.pop
-          chunked << [handle_chunk, last_chunk, word].compact.join(' ').squish
-        else
-          chunked << chunk_message(chunks.join(' ').squish, player, chunked)
-        end
-      end
+    proposed_chunk = [handle_chunk, chunked.last, chunks[0]].compact.join(' ')
+    if proposed_chunk.length <= 140
+      chunked << [chunked.pop, chunks.shift].compact.join(' ')
     else
-      chunked << [handle_chunk, chunks].join(' ').squish
-      chunks = []
+      chunked << chunks.shift
     end
-    chunked << chunk_message(chunks.join(' '), player, chunked) if chunks.any?
-    chunked.flatten
+    chunk_message(chunks.join(' '), player, chunked)
+    chunked.map do |chunk|
+      if handle_chunk.present?
+        "#{handle_chunk} #{chunk}"
+      else
+        chunk
+      end
+    end.flatten
   end
 
   private
